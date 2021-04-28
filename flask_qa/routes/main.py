@@ -90,5 +90,28 @@ def unanswered():
     return render_template('unanswered.html', **context)
 
 @main.route('/users')
+@login_required
 def users():
-    return render_template('users.html')
+    if not current_user.admin:
+        return redirect(url_for('main.index'))
+
+    users = User.query.filter_by(admin=False).all()
+
+    context = {
+        'users' : users
+    }
+
+    return render_template('users.html', **context)
+
+@main.route('/promote/<int:user_id>')
+@login_required
+def promote(user_id):
+    if not current_user.admin:
+        return redirect(url_for('main.index'))
+
+    user = User.query.get_or_404(user_id)
+
+    user.expert = True
+    db.session.commit()
+
+    return redirect(url_for('main.users'))
