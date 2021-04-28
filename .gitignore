@@ -19,6 +19,7 @@ docs/_build/
 .vscode
 instance/
 start.sh
+.flaskenv
 
 # Coverage reports
 htmlcov/
