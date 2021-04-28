@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 
-from .extensions import db
-from .models import Question, User
+from ..extensions import db
+from ..models import Question, User
 
 main = Blueprint('main', __name__)
 
@@ -17,17 +17,12 @@ def ask():
 def answer():
     return render_template('answer.html')
 
-@main.route('/login')
-def login():
-    return render_template('login.html')
 
 @main.route('/question')
 def question():
     return render_template('question.html')
 
-@main.route('/register')
-def register():
-    return render_template('register.html')
+
 
 @main.route('/unanswered')
 def unanswered():
