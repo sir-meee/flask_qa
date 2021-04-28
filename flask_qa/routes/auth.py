@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user
 from werkzeug.security import check_password_hash
 
@@ -35,12 +35,13 @@ def login():
 
         user = User.query.filter_by(name=name).first()
 
-        error_message = ''
+        # error_message = ''
 
         if not user or not check_password_hash(user.password, password):
-            error_message = 'Could not login. Please check and try again.'
+            # error_message = 'Could not login. Please check and try again.'
+            flash('Invalid username or Password')
 
-        if not error_message:
+        else:
             login_user(user)
             return redirect(url_for('main.index'))
 
